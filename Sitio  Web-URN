@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universidad Regional del Norte (URN) | Prototipo SPA</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        urnPurple: '#3B1142',
+                        urnGold: '#D4AF37',
+                        urnLight: '#F8F9FA',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gold-glow {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-[#F8F9FA] text-gray-800 font-sans antialiased min-h-screen flex flex-col selection:bg-[#3B1142] selection:text-[#D4AF37]">
+
+    <!-- 1. CABECERA (Header) - Fija e igual para todo el sitio -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-[#3B1142] text-white shadow-lg border-b border-[#D4AF37]/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo URN -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchSection('inicio')">
+                <div class="bg-[#D4AF37] text-[#3B1142] font-black text-xl px-3 py-1.5 rounded-lg shadow-md tracking-wider">
+                    URN
+                </div>
+                <div>
+                    <span class="block font-bold text-lg leading-tight tracking-wide">UNIVERSIDAD</span>
+                    <span class="block text-xs text-[#D4AF37] tracking-widest uppercase">Regional del Norte</span>
+                </div>
+            </div>
+
+            <!-- Menú de Navegación SPA -->
+            <nav class="hidden md:flex items-center space-x-2">
+                <button onclick="switchSection('inicio')" id="nav-btn-inicio" class="px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 bg-[#D4AF37] text-[#3B1142] shadow-sm">
+                    <i class="fa-solid fa-house mr-2"></i>Inicio
+                </button>
+                <button onclick="switchSection('licenciaturas')" id="nav-btn-licenciaturas" class="px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 text-white hover:bg-white/10">
+                    <i class="fa-solid fa-graduation-cap mr-2"></i>Licenciaturas
+                </button>
+            </nav>
+
+            <!-- Menú Móvil Botón -->
+            <div class="md:hidden flex items-center">
+                <button onclick="toggleMobileMenu()" class="text-white focus:outline-none p-2">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#3B1142] border-t border-white/10 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchSection('inicio'); toggleMobileMenu();" class="block w-full text-left px-4 py-2 rounded-lg text-white font-medium hover:bg-white/10">Inicio</button>
+            <button onclick="switchSection('licenciaturas'); toggleMobileMenu();" class="block w-full text-left px-4 py-2 rounded-lg text-white font-medium hover:bg-white/10">Licenciaturas</button>
+        </div>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL (SPA) -->
+    <main class="flex-grow pt-20">
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN 1: INICIO (Visible por defecto) -->
+        <!-- ========================================== -->
+        <section id="section-inicio" class="block">
+            
+            <!-- Héroe del Banner Principal -->
+            <div class="relative bg-[#3B1142] text-white py-24 lg:py-32 overflow-hidden">
+                <div class="absolute inset-0 opacity-25 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1920&q=80');"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-[#3B1142] via-[#3B1142]/90 to-transparent"></div>
+                
+                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-2xl bg-[#3B1142]/95 border-l-4 border-[#D4AF37] p-8 lg:p-10 rounded-r-2xl shadow-2xl backdrop-blur-sm">
+                        <span class="inline-block bg-[#D4AF37]/20 text-[#D4AF37] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-4">
+                            Excelencia Académica
+                        </span>
+                        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-6 leading-tight">
+                            Bienvenidos a Universidad Regional del Norte
+                        </h1>
+                        <p class="text-gray-200 text-base sm:text-lg mb-8 leading-relaxed">
+                            Formando líderes visionarios con un modelo educativo vanguardista, vinculación empresarial y exigencia académica internacional.
+                        </p>
+                        <button onclick="switchSection('licenciaturas')" class="bg-[#D4AF37] hover:bg-[#c29d30] text-[#3B1142] font-bold px-8 py-3.5 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5">
+                            Conoce más <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Selector de Campus -->
+            <div class="bg-white py-12 border-b border-gray-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl font-bold text-[#3B1142]">Selecciona tu Campus</h2>
+                        <div class="w-16 h-1 bg-[#D4AF37] mx-auto mt-2 rounded-full"></div>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-3 sm:gap-4" id="campus-selector">
+                        <button onclick="selectCampus(this)" class="campus-btn active-campus px-6 py-3 rounded-xl font-semibold text-sm bg-[#3B1142] text-white shadow transition-all hover:bg-[#4d1656]">
+                            <i class="fa-solid fa-location-dot mr-2 text-[#D4AF37]"></i>Chihuahua
+                        </button>
+                        <button onclick="selectCampus(this)" class="campus-btn px-6 py-3 rounded-xl font-semibold text-sm bg-[#F8F9FA] text-gray-700 border border-gray-300 shadow-sm transition-all hover:bg-[#3B1142] hover:text-white">
+                            <i class="fa-solid fa-location-dot mr-2 text-[#D4AF37]"></i>CD. Juárez
+                        </button>
+                        <button onclick="selectCampus(this)" class="campus-btn px-6 py-3 rounded-xl font-semibold text-sm bg-[#F8F9FA] text-gray-700 border border-gray-300 shadow-sm transition-all hover:bg-[#3B1142] hover:text-white">
+                            <i class="fa-solid fa-location-dot mr-2 text-[#D4AF37]"></i>Delicias
+                        </button>
+                        <button onclick="selectCampus(this)" class="campus-btn px-6 py-3 rounded-xl font-semibold text-sm bg-[#F8F9FA] text-gray-700 border border-gray-300 shadow-sm transition-all hover:bg-[#3B1142] hover:text-white">
+                            <i class="fa-solid fa-location-dot mr-2 text-[#D4AF37]"></i>Cuauhtémoc
+                        </button>
+                        <button onclick="selectCampus(this)" class="campus-btn px-6 py-3 rounded-xl font-semibold text-sm bg-[#F8F9FA] text-gray-700 border border-gray-300 shadow-sm transition-all hover:bg-[#3B1142] hover:text-white">
+                            <i class="fa-solid fa-location-dot mr-2 text-[#D4AF37]"></i>Parral
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bloques de Información -->
+            <div class="py-16 bg-[#F8F9FA]">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Tarjeta 1 -->
+                        <div class="bg-white p-8 rounded-2xl shadow-md border-t-4 border-[#3B1142] hover:shadow-xl transition-all">
+                            <div class="w-12 h-12 bg-[#3B1142]/10 rounded-xl flex items-center justify-center text-[#3B1142] text-xl mb-6">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-[#3B1142] mb-3">Tu siguiente paso profesional...</h3>
+                            <p class="text-gray-600 mb-6 leading-relaxed">
+                                Conecta directamente con el sector productivo de la región a través de nuestros convenios estratégicos, prácticas profesionales y programas de doble titulación.
+                            </p>
+                            <a href="#" onclick="switchSection('licenciaturas')" class="text-[#3B1142] font-semibold inline-flex items-center hover:text-[#D4AF37] transition-colors">
+                                Explorar programas <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                        <!-- Tarjeta 2 -->
+                        <div class="bg-white p-8 rounded-2xl shadow-md border-t-4 border-[#D4AF37] hover:shadow-xl transition-all">
+                            <div class="w-12 h-12 bg-[#D4AF37]/10 rounded-xl flex items-center justify-center text-[#D4AF37] text-xl mb-6">
+                                <i class="fa-solid fa-compass"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-[#3B1142] mb-3">¿No sabes qué estudiar?</h3>
+                            <p class="text-gray-600 mb-6 leading-relaxed">
+                                Nuestro equipo de orientación vocacional te acompaña en la elección de tu carrera ideal mediante test especializados y asesoría personalizada.
+                            </p>
+                            <a href="#contacto" class="text-[#3B1142] font-semibold inline-flex items-center hover:text-[#D4AF37] transition-colors">
+                                Agendar orientación <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bienvenida Detallada (Dos Columnas) -->
+            <div class="py-20 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <div class="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-[#D4AF37]">
+                                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="Estudiantes URN" class="w-full h-auto object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#3B1142]/60 to-transparent"></div>
+                                <div class="absolute bottom-6 left-6 text-white">
+                                    <span class="text-[#D4AF37] font-bold text-sm tracking-wider uppercase">Comunidad URN</span>
+                                    <h4 class="text-xl font-bold">Líderes con visión global</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-[#D4AF37] font-bold text-sm tracking-wider uppercase">Nuestra Esencia</span>
+                            <h2 class="text-3xl font-extrabold text-[#3B1142] mt-2 mb-6">Bienvenid@s a URN</h2>
+                            <p class="text-gray-600 mb-6 leading-relaxed">
+                                En la Universidad Regional del Norte nos distinguimos por ofrecer una educación superior dinámica, adaptada a las necesidades reales del mercado laboral actual. Fomentamos el pensamiento crítico, la innovación tecnológica y el liderazgo ético.
+                            </p>
+                            <div class="grid grid-cols-2 gap-6 pt-4 border-t border-gray-200">
+                                <div>
+                                    <span class="block text-3xl font-black text-[#3B1142]">95%</span>
+                                    <span class="text-sm text-gray-500 font-medium">Empleabilidad de egresados</span>
+                                </div>
+                                <div>
+                                    <span class="block text-3xl font-black text-[#D4AF37]">30+</span>
+                                    <span class="text-sm text-gray-500 font-medium">Años de trayectoria</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de Filosofía (Modelo Integra 2.0) -->
+            <div class="py-20 bg-[#F8F9FA] border-t border-gray-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <span class="text-[#D4AF37] font-bold text-sm tracking-wider uppercase">Formación Integral</span>
+                    <h2 class="text-3xl font-extrabold text-[#3B1142] mt-2 mb-4">Nuestra Filosofía</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto mb-12">
+                        Nuestro compromiso es el desarrollo pleno del estudiante a través del innovador modelo académico centrado en competencias y valores.
+                    </p>
+
+                    <!-- Representación gráfica circular Integra 2.0 -->
+                    <div class="relative max-w-md mx-auto bg-white p-10 rounded-full shadow-xl border-4 border-[#3B1142] aspect-square flex flex-col items-center justify-center text-center">
+                        <div class="absolute inset-4 rounded-full border-2 border-dashed border-[#D4AF37] animate-spin-slow pointer-events-none" style="animation-duration: 30s;"></div>
+                        <div class="bg-[#3B1142] text-white w-20 h-20 rounded-full flex items-center justify-center text-2xl font-black shadow-lg mb-4">
+                            <i class="fa-solid fa-atom text-[#D4AF37]"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-[#3B1142]">Integra 2.0</h3>
+                        <p class="text-sm text-gray-500 font-medium mt-2 px-6">
+                            Academia, Tecnología, Liderazgo, Innovación y Ética Profesional unidos en un solo núcleo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN 2: LICENCIATURAS (Oculta por defecto) -->
+        <!-- ========================================== -->
+        <section id="section-licenciaturas" class="hidden">
+            
+            <!-- Título de Sección: Banda Morada -->
+            <div class="bg-[#3B1142] text-white py-16 text-center shadow-md">
+                <div class="max-w-7xl mx-auto px-4">
+                    <h1 class="text-4xl sm:text-5xl font-black tracking-tight mb-3">Licenciaturas</h1>
+                    <p class="text-[#D4AF37] font-medium text-lg">Descubre nuestra oferta académica diseñada para tu éxito profesional</p>
+                </div>
+            </div>
+
+            <!-- Filtro de Modalidad Interactivo -->
+            <div class="bg-white py-8 border-b border-gray-200 sticky top-20 z-40 shadow-sm">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                        <span class="text-xs font-bold text-[#3B1142] uppercase tracking-wider">
+                            SELECCIONA TU MODALIDAD:
+                        </span>
+                        <div class="flex flex-wrap justify-center gap-2" id="modality-filters">
+                            <button onclick="filterModality('escolarizada', this)" class="mod-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#3B1142] text-white shadow transition-all">
+                                Escolarizada
+                            </button>
+                            <button onclick="filterModality('virtual', this)" class="mod-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-[#F8F9FA] text-gray-700 border border-gray-300 transition-all hover:bg-[#3B1142] hover:text-white">
+                                Virtual
+                            </button>
+                            <button onclick="filterModality('sabatino', this)" class="mod-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-[#F8F9FA] text-gray-700 border border-gray-300 transition-all hover:bg-[#3B1142] hover:text-white">
+                                Sabatino
+                            </button>
+                            <button onclick="filterModality('ejecutiva', this)" class="mod-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-[#F8F9FA] text-gray-700 border border-gray-300 transition-all hover:bg-[#3B1142] hover:text-white">
+                                Ejecutiva
+                            </button>
+                            <button onclick="filterModality('dies', this)" class="mod-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-[#F8F9FA] text-gray-700 border border-gray-300 transition-all hover:bg-[#3B1142] hover:text-white">
+                                DIES
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Licenciaturas (Grid Responsivo) -->
+            <div class="py-16 bg-[#F8F9FA]">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="programs-grid">
+
+                        <!-- PROGRAMA NUEVO 1: Psicología -->
+                        <div class="program-card bg-[#3B1142] text-white rounded-2xl p-8 shadow-xl border-2 border-[#D4AF37] gold-glow relative flex flex-col justify-between" data-modality="escolarizada virtual ejecututiva">
+                            <div class="absolute top-6 right-6 bg-[#D4AF37] text-[#3B1142] font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow">
+                                NUEVO
+                            </div>
+                            <div>
+                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-[#D4AF37] text-xl mb-6">
+                                    <i class="fa-solid fa-brain"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-3">Psicología</h3>
+                                <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+                                    Comprende el comportamiento humano y promueve el bienestar mental con herramientas científicas y clínicas de vanguardia.
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                                <span class="text-xs text-[#D4AF37] font-semibold">Duración: 8 Semestres</span>
+                                <button class="bg-[#D4AF37] text-[#3B1142] font-bold px-4 py-2 rounded-lg text-xs hover:bg-white transition-all">Ver Plan</button>
+                            </div>
+                        </div>
+
+                        <!-- PROGRAMA NUEVO 2: Diseño Gráfico -->
+                        <div class="program-card bg-[#3B1142] text-white rounded-2xl p-8 shadow-xl border-2 border-[#D4AF37] gold-glow relative flex flex-col justify-between" data-modality="escolarizada sabatino">
+                            <div class="absolute top-6 right-6 bg-[#D4AF37] text-[#3B1142] font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow">
+                                NUEVO
+                            </div>
+                            <div>
+                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-[#D4AF37] text-xl mb-6">
+                                    <i class="fa-solid fa-pen-nib"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-3">Diseño Gráfico</h3>
+                                <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+                                    Domina la comunicación visual, branding, multimedia y experiencias digitales interactivas para marcas globales.
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                                <span class="text-xs text-[#D4AF37] font-semibold">Duración: 8 Semestres</span>
+                                <button class="bg-[#D4AF37] text-[#3B1142] font-bold px-4 py-2 rounded-lg text-xs hover:bg-white transition-all">Ver Plan</button>
+                            </div>
+                        </div>
+
+                        <!-- PROGRAMA NUEVO 3: Contaduría Pública -->
+                        <div class="program-card bg-[#3B1142] text-white rounded-2xl p-8 shadow-xl border-2 border-[#D4AF37] gold-glow relative flex flex-col justify-between" data-modality="escolarizada ejecututiva sabatino">
+                            <div class="absolute top-6 right-6 bg-[#D4AF37] text-[#3B1142] font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow">
+                                NUEVO
+                            </div>
+                            <div>
+                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-[#D4AF37] text-xl mb-6">
+                                    <i class="fa-solid fa-calculator"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-3">Contaduría Pública</h3>
+                                <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+                                    Especialízate en auditoría fiscal, finanzas corporativas y normativas internacionales de contabilidad.
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                                <span class="text-xs text-[#D4AF37] font-semibold">Duración: 8 Semestres</span>
+                                <button class="bg-[#D4AF37] text-[#3B1142] font-bold px-4 py-2 rounded-lg text-xs hover:bg-white transition-all">Ver Plan</button>
+                            </div>
+                        </div>
+
+                        <!-- PROGRAMA 4: Administración de Empresas -->
+                        <div class="program-card bg-[#3B1142] text-white rounded-2xl p-8 shadow-xl border border-white/10 relative flex flex-col justify-between" data-modality="escolarizada virtual ejecututiva sabatino dies">
+                            <div>
+                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-[#D4AF37] text-xl mb-6">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-3">Administración de Empresas</h3>
+                                <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+                                    Lidera organizaciones eficientes, toma decisiones estratégicas y gestiona proyectos de alto impacto empresarial.
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                                <span class="text-xs text-[#D4AF37] font-semibold">Duración: 8 Semestres</span>
+                                <button class="bg-[#D4AF37] text-[#3B1142] font-bold px-4 py-2 rounded-lg text-xs hover:bg-white transition-all">Ver Plan</button>
+                            </div>
+                        </div>
+
+                        <!-- PROGRAMA 5: Derecho -->
+                        <div class="program-card bg-[#3B1142] text-white rounded-2xl p-8 shadow-xl border border-white/10 relative flex flex-col justify-between" data-modality="escolarizada ejecututiva sabatino">
+                            <div>
+                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-[#D4AF37] text-xl mb-6">
+                                    <i class="fa-solid fa-scale-balanced"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-3">Derecho</h3>
+                                <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+                                    Formación jurídica sólida en juicios orales, derecho corporativo, internacional y defensa de los derechos humanos.
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                                <span class="text-xs text-[#D4AF37] font-semibold">Duración: 9 Semestres</span>
+                                <button class="bg-[#D4AF37] text-[#3B1142] font-bold px-4 py-2 rounded-lg text-xs hover:bg-white transition-all">Ver Plan</button>
+                            </div>
+                        </div>
+
+                        <!-- PROGRAMA 6: Ingeniería Industrial -->
+                        <div class="program-card bg-[#3B1142] text-white rounded-2xl p-8 shadow-xl border border-white/10 relative flex flex-col justify-between" data-modality="escolarizada dies">
+                            <div>
+                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-[#D4AF37] text-xl mb-6">
+                                    <i class="fa-solid fa-gears"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-3">Ingeniería Industrial</h3>
+                                <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+                                    Optimiza procesos de manufactura, cadena de suministro y sistemas de calidad con estándares internacionales.
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                                <span class="text-xs text-[#D4AF37] font-semibold">Duración: 9 Semestres</span>
+                                <button class="bg-[#D4AF37] text-[#3B1142] font-bold px-4 py-2 rounded-lg text-xs hover:bg-white transition-all">Ver Plan</button>
+                            </div>
+                        </div>
+
+                        <!-- PROGRAMA 7: Administración Financiera -->
+                        <div class="program-card bg-[#3B1142] text-white rounded-2xl p-8 shadow-xl border border-white/10 relative flex flex-col justify-between" data-modality="escolarizada ejecututiva">
+                            <div>
+                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-[#D4AF37] text-xl mb-6">
+                                    <i class="fa-solid fa-sack-dollar"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-3">Administración Financiera</h3>
+                                <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+                                    Evalúa riesgos, inversiones bursátiles y estrategias de capital para maximizar el valor de las corporaciones.
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                                <span class="text-xs text-[#D4AF37] font-semibold">Duración: 8 Semestres</span>
+                                <button class="bg-[#D4AF37] text-[#3B1142] font-bold px-4 py-2 rounded-lg text-xs hover:bg-white transition-all">Ver Plan</button>
+                            </div>
+                        </div>
+
+                        <!-- PROGRAMA 8: Comercio Exterior -->
+                        <div class="program-card bg-[#3B1142] text-white rounded-2xl p-8 shadow-xl border border-white/10 relative flex flex-col justify-between" data-modality="escolarizada virtual dies">
+                            <div>
+                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-[#D4AF37] text-xl mb-6">
+                                    <i class="fa-solid fa-earth-americas"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-3">Comercio Exterior</h3>
+                                <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+                                    Gestión aduanera, tratados internacionales y logística global para conectar empresas con mercados mundiales.
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                                <span class="text-xs text-[#D4AF37] font-semibold">Duración: 8 Semestres</span>
+                                <button class="bg-[#D4AF37] text-[#3B1142] font-bold px-4 py-2 rounded-lg text-xs hover:bg-white transition-all">Ver Plan</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección "Nuestra Oferta Educativa" -->
+            <div class="py-20 bg-white border-t border-gray-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <span class="text-[#D4AF37] font-bold text-sm tracking-wider uppercase">Excelencia URN</span>
+                    <h2 class="text-3xl font-extrabold text-[#3B1142] mt-2 mb-6">Nuestra Oferta Educativa</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto mb-12">
+                        Contamos con opciones de formación continua, posgrados y especialidades diseñadas para impulsar tu desarrollo profesional al siguiente nivel.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div class="p-6 bg-[#F8F9FA] rounded-2xl border border-gray-200 shadow-sm">
+                            <i class="fa-solid fa-graduation-cap text-3xl text-[#3B1142] mb-4"></i>
+                            <h4 class="font-bold text-lg text-[#3B1142] mb-2">Licenciaturas</h4>
+                            <p class="text-sm text-gray-500">Programas con validez oficial y enfoque práctico.</p>
+                        </div>
+                        <div class="p-6 bg-[#F8F9FA] rounded-2xl border border-gray-200 shadow-sm">
+                            <i class="fa-solid fa-user-graduate text-3xl text-[#D4AF37] mb-4"></i>
+                            <h4 class="font-bold text-lg text-[#3B1142] mb-2">Maestrías</h4>
+                            <p class="text-sm text-gray-500">Especialización directiva y liderazgo avanzado.</p>
+                        </div>
+                        <div class="p-6 bg-[#F8F9FA] rounded-2xl border border-gray-200 shadow-sm">
+                            <i class="fa-solid fa-certificate text-3xl text-[#3B1142] mb-4"></i>
+                            <h4 class="font-bold text-lg text-[#3B1142] mb-2">Diplomados</h4>
+                            <p class="text-sm text-gray-500">Actualización continua para profesionales en activo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA (Footer) -->
+    <footer class="bg-[#3B1142] text-white py-12 border-t-4 border-[#D4AF37]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="bg-[#D4AF37] text-[#3B1142] font-black text-lg px-2.5 py-1 rounded">URN</div>
+                    <span class="font-bold tracking-wider">Universidad Regional del Norte</span>
+                </div>
+                <p class="text-xs text-gray-300">© 2026 URN. Todos los derechos reservados.</p>
+            </div>
+            <div class="flex justify-center space-x-6 text-xl">
+                <a href="#" class="text-gray-300 hover:text-[#D4AF37] transition-colors"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="text-gray-300 hover:text-[#D4AF37] transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="text-gray-300 hover:text-[#D4AF37] transition-colors"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#" class="text-gray-300 hover:text-[#D4AF37] transition-colors"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <div class="text-right md:text-right text-xs text-gray-300">
+                <p class="font-semibold text-[#D4AF37]">Admisiones 2026</p>
+                <p class="mt-1">contacto@urn.edu.mx | Tel: 800 000 URN</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT EMBEBIDO PARA SPA Y FILTROS -->
+    <script>
+        // Lógica de Navegación SPA
+        function switchSection(sectionId) {
+            const secInicio = document.getElementById('section-inicio');
+            const secLicenciaturas = document.getElementById('section-licenciaturas');
+            const btnInicio = document.getElementById('nav-btn-inicio');
+            const btnLicenciaturas = document.getElementById('nav-btn-licenciaturas');
+
+            if (sectionId === 'inicio') {
+                secInicio.classList.remove('hidden');
+                secInicio.classList.add('block');
+                secLicenciaturas.classList.remove('block');
+                secLicenciaturas.classList.add('hidden');
+
+                // Estilos activos del menú
+                btnInicio.className = "px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 bg-[#D4AF37] text-[#3B1142] shadow-sm";
+                btnLicenciaturas.className = "px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 text-white hover:bg-white/10";
+            } else if (sectionId === 'licenciaturas') {
+                secLicenciaturas.classList.remove('hidden');
+                secLicenciaturas.classList.add('block');
+                secInicio.classList.remove('block');
+                secInicio.classList.add('hidden');
+
+                // Estilos activos del menú
+                btnLicenciaturas.className = "px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 bg-[#D4AF37] text-[#3B1142] shadow-sm";
+                btnInicio.className = "px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 text-white hover:bg-white/10";
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Menú Móvil Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Selector de Campus Interactivo
+        function selectCampus(button) {
+            const buttons = document.querySelectorAll('.campus-btn');
+            buttons.forEach(btn => {
+                btn.className = "campus-btn px-6 py-3 rounded-xl font-semibold text-sm bg-[#F8F9FA] text-gray-700 border border-gray-300 shadow-sm transition-all hover:bg-[#3B1142] hover:text-white";
+                const icon = btn.querySelector('i');
+                if(icon) icon.className = "fa-solid fa-location-dot mr-2 text-[#D4AF37]";
+            });
+            button.className = "campus-btn active-campus px-6 py-3 rounded-xl font-semibold text-sm bg-[#3B1142] text-white shadow transition-all hover:bg-[#4d1656]";
+            const icon = button.querySelector('i');
+            if(icon) icon.className = "fa-solid fa-location-dot mr-2 text-[#D4AF37]";
+        }
+
+        // Filtro Interactivo de Modalidades
+        function filterModality(modality, button) {
+            // Actualizar clases de botones de modalidad
+            const modButtons = document.querySelectorAll('.mod-btn');
+            modButtons.forEach(btn => {
+                btn.className = "mod-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-[#F8F9FA] text-gray-700 border border-gray-300 transition-all hover:bg-[#3B1142] hover:text-white";
+            });
+            button.className = "mod-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#3B1142] text-white shadow transition-all";
+
+            // Filtrar tarjetas
+            const cards = document.querySelectorAll('.program-card');
+            cards.forEach(card => {
+                const modalities = card.getAttribute('data-modality');
+                if (modalities.includes(modality)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
